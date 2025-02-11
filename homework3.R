@@ -42,3 +42,7 @@ for (x in 1:99){
   }
 }
 correct.numbers
+
+incorrect.num <- setdiff(problem.numbers, correct.numbers)
+
+fixed.number <- setdiff(correct.numbers, problem.numbers)
