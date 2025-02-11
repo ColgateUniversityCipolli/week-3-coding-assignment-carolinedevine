@@ -51,9 +51,46 @@ to this \texttt{.Rnw} file.\\
 % Write your answer and explanations here.
 
 <<size="scriptsize", warning=F, message=F>>=
-# Copy your solution code here.
+# Numbers packase: Number-Theoretic Functions for prime factorization -> google
+library(numbers)
+help(numbers)
+
+# A vector with the products of unique prime numbers with one incorrect error
+problem.numbers <- c(6, 10, 14, 15, 21,
+                    22, 26, 33, 34, 35,
+                    38, 39, 46, 51, 55,
+                    57, 58, 62, 65, 69,
+                    75, 77, 82, 85, 86,
+                    87, 91, 93, 94, 95)
+
+# Finds the prime factors of the numbers implemented into this function 
+# Returns the implemented numbers that have only two unique factors, not three or the same
+unique.prime.numbers <- function(i){
+  prime.factorization <- primeFactors(i)
+  return (length(prime.factorization) == 2 && length(prime.factorization) == length(unique(prime.factorization)))
+}
+
+# Initialize empty vector
+correct.numbers <- c()
+
+# Pass the numbers between 1 and 99 (<100) into function and save in correct.numbers
+for (x in 1:99){
+  if(unique.prime.numbers(x) == T){
+    correct.numbers <- c(correct.numbers, x)
+  }
+}
+# To check 
+(correct.numbers)
+
+# Find the incorrect number in Blake's numbers from the problem using setdiff
+(incorrect.num <- setdiff(problem.numbers, correct.numbers))
+
+# Find the correct number in our new correct.numbers vector using setdiff
+(fixed.number <- setdiff(correct.numbers, problem.numbers))
 @
 \end{enumerate}
+
+To evaluate this problem, I started with figuring it out on paper and identified that the number 75 is the incorrect number in Blake's set of 30 positive integers less than 100 that are all supposed to be the product of unique prime numbers. 75 is the only number in the set that is the product of 3 numbers, two of which are the same $(5)$. I knew I needed to find the prime factorization of these numbers which is why I installed the numbers package. The numbers package provides number-theoretic functions for factorization and prime numbers\citep{numberpackage}. This allowed me to create a function that gets the prime factorization of $i$ where $i$ = the number passed in through the function. The function then identifies if that number is the product of exactly two unique prime numbers, ensuring no repeated factors. Thus, the function is filtering out the ones with more than two unique prime factors. I saved each iteration in the \texttt{for()} loop so create a set of correct data points to Blake's problem. I then used \texttt{setdiff()} which returns the numbers in the first data set that are not in the second. This allowed me to isolate the wrong number in Blake's set versus the correct set. I then reversed my \texttt{setdiff()} to find the number that should be in place of 75 which from my analytical work had to be between 69 and 77. My solution shows that 75 is the incorrect number and that the number should be 74 instead. 
 
 \bibliography{bibliography}
 \end{document}

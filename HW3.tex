@@ -103,11 +103,60 @@ to this \texttt{.Rnw} file.\\
 \begin{knitrout}\scriptsize
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Copy your solution code here.}
+\hlcom{# Numbers packase: Number-Theoretic Functions for prime factorization -> google}
+\hlkwd{library}\hldef{(numbers)}
+\hlkwd{help}\hldef{(numbers)}
+
+\hlcom{# A vector with the products of unique prime numbers with one incorrect error}
+\hldef{problem.numbers} \hlkwb{<-} \hlkwd{c}\hldef{(}\hlnum{6}\hldef{,} \hlnum{10}\hldef{,} \hlnum{14}\hldef{,} \hlnum{15}\hldef{,} \hlnum{21}\hldef{,}
+                    \hlnum{22}\hldef{,} \hlnum{26}\hldef{,} \hlnum{33}\hldef{,} \hlnum{34}\hldef{,} \hlnum{35}\hldef{,}
+                    \hlnum{38}\hldef{,} \hlnum{39}\hldef{,} \hlnum{46}\hldef{,} \hlnum{51}\hldef{,} \hlnum{55}\hldef{,}
+                    \hlnum{57}\hldef{,} \hlnum{58}\hldef{,} \hlnum{62}\hldef{,} \hlnum{65}\hldef{,} \hlnum{69}\hldef{,}
+                    \hlnum{75}\hldef{,} \hlnum{77}\hldef{,} \hlnum{82}\hldef{,} \hlnum{85}\hldef{,} \hlnum{86}\hldef{,}
+                    \hlnum{87}\hldef{,} \hlnum{91}\hldef{,} \hlnum{93}\hldef{,} \hlnum{94}\hldef{,} \hlnum{95}\hldef{)}
+
+\hlcom{# Finds the prime factors of the numbers implemented into this function }
+\hlcom{# Returns the implemented numbers that have only two unique factors, not three or the same}
+\hldef{unique.prime.numbers} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{i}\hldef{)\{}
+  \hldef{prime.factorization} \hlkwb{<-} \hlkwd{primeFactors}\hldef{(i)}
+  \hlkwd{return} \hldef{(}\hlkwd{length}\hldef{(prime.factorization)} \hlopt{==} \hlnum{2} \hlopt{&&} \hlkwd{length}\hldef{(prime.factorization)} \hlopt{==} \hlkwd{length}\hldef{(}\hlkwd{unique}\hldef{(prime.factorization)))}
+\hldef{\}}
+
+\hlcom{# Initialize empty vector}
+\hldef{correct.numbers} \hlkwb{<-} \hlkwd{c}\hldef{()}
+
+\hlcom{# Pass the numbers between 1 and 99 (<100) into function and save in correct.numbers}
+\hlkwa{for} \hldef{(x} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{99}\hldef{)\{}
+  \hlkwa{if}\hldef{(}\hlkwd{unique.prime.numbers}\hldef{(x)} \hlopt{==} \hldef{T)\{}
+    \hldef{correct.numbers} \hlkwb{<-} \hlkwd{c}\hldef{(correct.numbers, x)}
+  \hldef{\}}
+\hldef{\}}
+\hlcom{# To check }
+\hldef{(correct.numbers)}
 \end{alltt}
+\begin{verbatim}
+##  [1]  6 10 14 15 21 22 26 33 34 35 38 39 46 51 55 57 58 62 65 69 74 77 82 85 86
+## [26] 87 91 93 94 95
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Find the incorrect number in Blake's numbers from the problem using setdiff}
+\hldef{(incorrect.num} \hlkwb{<-} \hlkwd{setdiff}\hldef{(problem.numbers, correct.numbers))}
+\end{alltt}
+\begin{verbatim}
+## [1] 75
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Find the correct number in our new correct.numbers vector using setdiff}
+\hldef{(fixed.number} \hlkwb{<-} \hlkwd{setdiff}\hldef{(correct.numbers, problem.numbers))}
+\end{alltt}
+\begin{verbatim}
+## [1] 74
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 \end{enumerate}
+
+To evaluate this problem, I started with figuring it out on paper and identified that the number 75 is the incorrect number in Blake's set of 30 positive integers less than 100 that are all supposed to be the product of unique prime numbers. 75 is the only number in the set that is the product of 3 numbers, two of which are the same $(5)$. I knew I needed to find the prime factorization of these numbers which is why I installed the numbers package. The numbers package provides number-theoretic functions for factorization and prime numbers\citep{numberpackage}. This allowed me to create a function that gets the prime factorization of $i$ where $i$ = the number passed in through the function. The function then identifies if that number is the product of exactly two unique prime numbers, ensuring no repeated factors. Thus, the function is filtering out the ones with more than two unique prime factors. I saved each iteration in the \texttt{for()} loop so create a set of correct data points to Blake's problem. I then used \texttt{setdiff()} which returns the numbers in the first data set that are not in the second. This allowed me to isolate the wrong number in Blake's set versus the correct set. I then reversed my \texttt{setdiff()} to find the number that should be in place of 75 which from my analytical work had to be between 69 and 77. My solution shows that 75 is the incorrect number and that the number should be 74 instead. 
 
 \bibliography{bibliography}
 \end{document}

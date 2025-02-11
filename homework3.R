@@ -30,19 +30,27 @@ problem.numbers <- c(6, 10, 14, 15, 21,
                     75, 77, 82, 85, 86,
                     87, 91, 93, 94, 95)
 
+# Finds the prime factors of the numbers implemented into this function 
+# Returns the implemented numbers that have only two unique factors, not three or the same
 unique.prime.numbers <- function(i){
   prime.factorization <- primeFactors(i)
   return (length(prime.factorization) == 2 && length(prime.factorization) == length(unique(prime.factorization)))
 }
 
+# Initialize empty vector
 correct.numbers <- c()
+
+# Pass the numbers between 1 and 99 (<100) into function and save in correct.numbers
 for (x in 1:99){
   if(unique.prime.numbers(x) == T){
     correct.numbers <- c(correct.numbers, x)
   }
 }
+# To check 
 correct.numbers
 
+# Find the incorrect number in Blake's numbers from the problem using setdiff
 incorrect.num <- setdiff(problem.numbers, correct.numbers)
 
+# Find the correct number in our new correct.numbers vector using setdiff
 fixed.number <- setdiff(correct.numbers, problem.numbers)
